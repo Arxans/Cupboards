@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GridManager : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
     [SerializeField] private int m_Width, m_Height;
     [SerializeField] private Tile m_TilePrefab = null;
@@ -12,12 +13,11 @@ public class GridManager : MonoBehaviour
     [SerializeField] private Indicator m_IndicatorPrefab = null;
     [SerializeField] private Color[] m_TileColors = null; 
 
-    [SerializeField] private Transform m_Camera = null;
     [SerializeField] private GameObject m_GamePanel = null;
     [SerializeField] private GameObject m_ExamplePanel = null;
     [SerializeField] private GameObject m_WinDialog = null;
 
-    [SerializeField] private TextAsset MapTextFile;
+    [SerializeField] private TextAsset[] m_MapsTextFiles = null;
 
     private int m_CountOfTiles;
     private int m_CountOfMapPoints;
@@ -38,7 +38,7 @@ public class GridManager : MonoBehaviour
     {
         string str;
 
-        using (StringReader reader = new StringReader(MapTextFile.text))
+        using (StringReader reader = new StringReader(m_MapsTextFiles[DataHolder.mapIndex].text))
         {
             if (!int.TryParse(reader.ReadLine(), out m_CountOfTiles))
                 Debug.LogError("TryParse Error");
@@ -95,7 +95,7 @@ public class GridManager : MonoBehaviour
             while (commaPos != -1 && idx < m_WinningTilesPos.Length)
             {
                 substr = str.Substring(0, commaPos);
-                str = str.Substring(commaPos + 1,str.Length - commaPos - 1);
+                str = str.Substring(commaPos + 1, str.Length - commaPos - 1);
 
                 if (!int.TryParse(substr, out value))
                     Debug.LogError("TryParse Error");
@@ -138,7 +138,6 @@ public class GridManager : MonoBehaviour
          
             m_Tiles = new Tile[m_CountOfTiles];
         }
-
 
         CreateExampleMap();
         CreateMainMap();
@@ -229,7 +228,7 @@ public class GridManager : MonoBehaviour
             {
                 indicator.transform.SetParent(m_GamePanel.transform, false);
                 indicator.name = $"PosIndicator {pos.x} {pos.y}";
-                indicator.m_GridManager = this;
+                indicator.m_GameManager = this;
                 indicator.m_MapIndex = i;
 
                 indicator.gameObject.SetActive(false);
@@ -258,7 +257,7 @@ public class GridManager : MonoBehaviour
                     false
                 );
                 spawnedTile.name = $"Tile {pos.x} {pos.y}";
-                spawnedTile.m_GridManager = this;
+                spawnedTile.m_GameManager = this;
                 spawnedTile.m_MapIndex = tilePos;
                 if (bExample)
                     spawnedTile.GetComponent<BoxCollider2D>().enabled = false;
@@ -357,5 +356,10 @@ public class GridManager : MonoBehaviour
         }
 
         return true;
+    }
+
+    public void BackToMapSelection()
+    {
+        SceneManager.LoadScene("MapSelection");
     }
 }

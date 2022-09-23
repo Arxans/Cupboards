@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Tile : MonoBehaviour
 {
-    public GridManager m_GridManager = null;
+    public GameManager m_GameManager = null;
     public int m_MapIndex;
     public Vector3 m_newPosition;
 
@@ -34,7 +34,7 @@ public class Tile : MonoBehaviour
 
     private void OnMouseDown()
     {
-        m_GridManager.OnTileClicked(this);
+        m_GameManager.OnTileClicked(this);
     }
     
     private void OnMouseEnter()

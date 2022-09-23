@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Indicator : MonoBehaviour
 {
-    public GridManager m_GridManager = null;
+    public GameManager m_GameManager = null;
     public int m_MapIndex;
 
     private Image m_Image;
@@ -25,7 +25,7 @@ public class Indicator : MonoBehaviour
 
     private void OnMouseDown()
     {
-        m_GridManager.OnIndicatorClicked(this);
+        m_GameManager.OnIndicatorClicked(this);
     }
 
     private void OnMouseEnter()

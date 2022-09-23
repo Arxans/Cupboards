@@ -53,9 +53,11 @@
     <UnityVersion>2020.3.25f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\GridManager.cs" />
+    <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Indicator.cs" />
     <Compile Include="Assets\Scripts\Tile.cs" />
+    <Compile Include="Assets\Scripts\DataHolder.cs" />
+    <Compile Include="Assets\Scripts\MapManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\InputFiles\Map_1.txt" />
